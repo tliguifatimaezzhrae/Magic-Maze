@@ -4,6 +4,8 @@ CXX      = g++
 
 SOURCES = 
 SOURCES += melangeur.cpp
+SOURCES += case.cpp
+SOURCES += mur.cpp
 
 OBJECTS = $(SOURCES:.cpp=.o)
 

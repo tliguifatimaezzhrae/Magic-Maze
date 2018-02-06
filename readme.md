@@ -1,7 +1,32 @@
 # Projet Magic Maze
 
+## Index
+
+1. [Introduction](#introduction)
+    * [Objectif](#objectif)
+    * [Compétences visées](#competences-visees)
+    * [Réalisation](#realisation)
+1. [Présentation du jeu](#presentation-du-jeu)
+    * [Principe du jeu](#principe-du-jeu)
+    * [Aventuriers](#aventuriers)
+    * [Tuiles supermarché](#tuiles-supermarche)
+    * [Cases spéciales](#cases-speciales)
+    * [Déroulement de la partie](#deroulement-partie)
+1. [Votre travail](#votre-travail)
+    * [Mélangeur générique](#melangeur-generique)
+    * [Génération de tuiles](#generation-tuiles)
+    * [Plus courts chemins dans une tuile](#chemin-tuile)
+    * [Gestion du supermarché](#gestion-supermarche)
+    * [Plus courts chemins dans le sumerparché](#chemin-supermarche)
+    * [Strategie de base](#strategie-base)
+    * [Bonus](#bonus)
+
+<a name="introduction"></a>
 ## Introduction
 
+[//]: # "{{{"
+
+<a name="objectif"></a>
 ### Objectif
 
 Le but de ce projet est la réalisation d'un joueur automatique pour le jeu
@@ -10,6 +35,7 @@ de société de Kasper Lapp où les joueurs doivent orienter des aventuriers dan
 un supermarché pour réaliser des objectifs. Votre joueur devra donc être en
 mesure de calculer à partir d'une situation de jeu les meilleurs coups à jouer.
 
+<a name="competences-visees"></a>
 ### Compétences visées
 
 Ce projet vous fera mettre en pratique les algorithmes et structures de données
@@ -23,6 +49,7 @@ projet, vous devriez donc être en mesure d'utiliser ces algorithmes et
 structures de données pour les problèmes pratiques que vous pourriez rencontrer
 dans la suite de votre carrière.
 
+<a name="realisation"></a>
 ### Réalisation
 
 Vous réaliserez ce projet en binômes. Ce projet sera rendu avant la dernière
@@ -43,8 +70,14 @@ devront être clairement indiqués en commentaires comme repris, avec le lien ve
 les pages sur lesquelles le code a été trouvé, et la licence du code lorsqu'elle
 est fournie.
 
+[//]: # "}}}"
+
+<a name="presentation-du-jeu"></a>
 ## Présentation du jeu
 
+[//]: # "{{{"
+
+<a name="principe-du-jeu"></a>
 ### Principe du jeu
 
 Dans le jeu Magic Maze, quatre aventuriers commencent au beau milieu d'un
@@ -58,6 +91,7 @@ seule direction (haut, bas, gauche, droite) qui lui est indiquée en début de
 partie. Les joueurs doivent donc se coordonner pour déplacer les pions, mais
 n'ont en plus que très rarement le droit de se parler pour se mettre d'accord.
 
+<a name="aventuriers"></a>
 ### Aventuriers
 
 Les aventuriers sont matérialisés par des pions de couleur, placés sur le
@@ -65,6 +99,7 @@ plateau de jeu. Leur couleur sert à identifier les éléments du plateau qui le
 correspondent (portes, objectifs, sorties). Les couleurs sont le jaune, le
 violet, le vert et le orange.
 
+<a name="tuiles-supermarche"></a>
 ### Tuiles supermarché
 
 Le supermarché est matérialisé par des tuiles. Une tuile est un carré de 4x4
@@ -92,6 +127,7 @@ les règles de déplacement).
 Les nouvelles tuiles sont piochées au hasard, ce qui fait qu'à chaque partie
 l'agencement du supermarché est différent.
 
+<a name="cases-speciales"></a>
 ### Cases spéciales
 
 Certaines cases sont particulières. Pour simplifier les règles du jeu, nous ne
@@ -103,6 +139,7 @@ dans le jeu réel):
 1. les cases sorties, il y en a également une par aventurier pour tout le
   supermarché, de la couleur de l'aventurier.
 
+<a name="deroulement-partie"></a>
 ### Déroulement de la partie
 
 En début de partie, une tuile de départ est utilisée. Cette tuile est telle que
@@ -129,7 +166,12 @@ les chemins les plus courts possibles (en terme de nombre de coups à réaliser)
 pour amener les aventuriers aux portes de leur couleur et découvrir le
 supermarché, puis pour les emmener à leurs objectifs ou leurs sorties.
 
+[//]: # "}}}"
+
+<a name="votre-travail"></a>
 ## Votre travail
+
+[//]: # "{{{"
 
 Votre travail consiste à élaborer un joueur automatique pour jouer au jeu Magic
 Maze. Le joueur devra être en mesure de décider pour chaque aventurier, étant
@@ -140,7 +182,10 @@ consistent à vous doter d'outils pour modéliser le jeu. Vous étudierez ensuit
 comment calculer les déplacements nécessaires pour amener un aventurier à une
 position donnée en utilisant le moins de coups possibles.
 
+<a name="melangeur-generique"></a>
 ### Mélangeur générique
+
+[//]: # "{{{"
 
 Pour générer des tuiles de supermarché et gérer des parties, le premier outil
 que nous vous proposons de programmer est un *mélangeur*. Ce mélangeur pourra
@@ -179,7 +224,6 @@ donc le suivant :
   de l'élément retiré. Il est supposé qu'à cette adresse, le nombre d'octets
   disponible est suffisant pour stocker l'objet.
 
-
 #### Code de base
 
 Vous trouverez dans le dépôt ci-présent des fichiers `melangeur.[hc]pp`, un
@@ -188,13 +232,18 @@ compile, mais les tests ne passent pas car le mélangeur ne fait absolument rien
 
 #### Avertissement pour la suite
 
-Ce type de généricité en `C` casse le mécanisme des constructeurs et
-destructeurs du `C++` : lorsque vous insérez ou retirez un élément dans votre
+Ce type de généricité utilisée en C casse le mécanisme des constructeurs et
+destructeurs du C++ : lorsque vous insérez ou retirez un élément dans votre
 mélangeur, aucun constructeur ou destructeur n'est appelé. Faites donc bien
 attention à vous assurer que les éléments que vous stockez dans le mélangeur
 peuvent être manipulés de cette façon.
 
+[//]: # "}}}"
+
+<a name="generation-tuiles"></a>
 ### Génération de tuiles
+
+[//]: # "{{{"
 
 Pour pouvoir étudier le jeu, vous programmerez ensuite un générateur de tuiles.
 Ce générateur permettra de générer des tuiles au hasard et vérifier que vos
@@ -216,6 +265,9 @@ Pour nous faciliter la vie par la suite, nous les numéroterons comme suit :
 | 12| 13| 14| 15|
 +---+---+---+---+
 ```
+
+Des fichier `case.[hc]pp` vous sont fournis pour vous aider à manipuler cette
+numérotation.
 
 #### Types de tuiles
 
@@ -281,7 +333,23 @@ Le placement des sites est soumis à quelques rèclges :
 
 #### Murs
 
-Entre les cases se trouvent éventuellement des murs
+Entre les cases se trouvent éventuellement des murs. Dans la suite, si nous
+avons besoin de numéroter les murs, ils seront numérotés comme suit :
+
+```
++---+---+---+---+
+|   12  16  20  |
++ 0 + 1 + 2 + 3 +
+|   13  17  21  |
++ 4 + 5 + 6 + 7 +
+|   14  18  22  |
++ 8 + 9 + 10+ 11+
+|   15  19  23  |
++---+---+---+---+
+```
+
+Des fichiers `mur.[hc]pp` vous sont fournis pour vous aider à manipuler ces
+indices.
 
 #### Principe de la génération
 
@@ -374,9 +442,10 @@ fonction du nombre d'éléments présents dans la structure d'union find est
 proportionnelle à la réciproque de [la fonction
 d'Ackermann](https://fr.wikipedia.org/wiki/Fonction_d%27Ackermann). Cette
 fonction est compliquée, mais ce qu'il faut en retenir, c'est qu'elle croît
-moins vite que n'importe quel logarithme, et si lentement que pour $n = 10^{80}$
-elle vaut environ 4.
+moins vite que n'importe quel logarithme, et si lentement que pour $`n =
+10^{80}`$ elle vaut environ 4.
 
+<a name="boutiques"></a>
 ### Boutiques
 
 Une fois tous les sites accessibles, une dernière passe esthétique consiste à
@@ -396,6 +465,7 @@ si elle est accessible depuis les sites (dans la même classe qu'eux) ou non.
 Tout mur qui sépare deux cases qui ne sont pas accessibles depuis les sites est
 abattu.
 
+<a name="resultat"></a>
 ### Résultat
 
 ```
@@ -420,24 +490,117 @@ abattu.
 +---+ v +---+---+   +---+ v +---+---+   +---+ v +---+---+
 ```
 
+[//]: # "}}}"
+
+<a name="chemin-tuile"></a>
 ### Plus court chemin dans une tuile
+
+Une fois les tuiles fonctionnelles, vous pouvez commencer à élaborer votre
+joueur en cherchant des plus courts chemins au sein d'une tuile : vous pourrez
+ainsi déplacer les pions dans une tuile pour rejoindre une case donnée, porte ou
+objectif.
 
 #### Nombre de coups
 
-#### Génération du graphe
+Dans Magic Maze, chaque joueur est responsable d'une direction. Lorsqu'un joueur
+déplace un aventurier, il peut le déplacer de plusieurs cases à la fois. Ainsi
+nous considérerons que chaque déplacement dans une direction coûte un coup,
+quelle que soit la longueur du déplacement.
+
+À partir d'une tuile, vous générerez un graphe comportant un noeud par case.
+Chaque nœud aura pour nœuds voisins les noeuds qui peuvent être atteints en un
+coup depuis sa case. Chaque arête sera étiquetée par la direction du coup, ainsi
+que sa longueur. Vous pourrez ainsi par la suite retrouver les coups à jouer à
+partir de la séquence de noeuds du graphe.
+
+À vous d'élaborer votre structure de données pour le graphe, à partir des
+structures de données de base que vous connaissez.
 
 #### Parcours en largeur
 
+Dans votre graphe, il n'y a pas de notion de poids sur les arêtes : chaque arête
+coûte un coup. Étant donné un point de départ et un point d'arrivée, vous pouvez
+donc réaliser un simple parcours en largeur pour trouver le chemin le plus court
+entre les deux.
+
+<a name="gestion-supermarche"></a>
 ### Gestion du supermarché
 
+Une fois les tuiles et les chemins fonctionnels, vous pouvez commencer à gérer
+le plateau dans son ensemble. À vous de créer une structure de données pour la
+gestion du supermarché dans son ensemble et l'assemblage des tuiles.
+
+#### Rotation des tuiles
+
+Par défaut, lors de la génération des tuiles, nous avons considéré que l'accès à
+une tuile était réalisé via la case 13. Lorsque la porte qui a été ouverte pour
+mener à cette nouvelle tuile est la porte de la case 2, tout va bien. Dans les
+autres cas il vous faudra faire tourner votre tuile.
+
+Pour vous aider dans la gestion de la rotation des tuiles, les classes `Case` et
+`Mur` sont munies d'une méthode pour les faire tourner. Selon votre
+implémentation d'une tuile, vous pourrez ainsi utiliser ces méthodes pour faire
+tourner toute une tuile.
+
+#### Connexion des graphes
+
+Pour pouvoir rechercher les plus courts chemins globalement dans tout le
+supermarché, il vous faudra reconnecter les graphes des tuiles individuelles.
+Attention il ne suffit pas de mettre une arête entre les noeuds des cases des
+portes : si vous mettez une arête avec un coût de 1, il n'est pas possible en un
+seul coup de traverser une porte en ligne droite, l'algorithme considérera qu'il
+faut s'arrêter à la porte. À l'inverse, si vous ajoutez une arête de coup 0, il
+serait alors possible par exemple de passer de la case 7 à la case 11 en allant
+vers le bas, puis de traverser la porte gratuitement lors qu'il y a eu un
+changement de direction.
+
+<a name="chemin-supermarche"></a>
 ### Plus court chemin dans le supermarché
 
+Lorsque votre graphe total est réalisé, vous pouvez à nouveau calculer les plus
+courts chemins via un parcours en largeur. Le parcours en largeur explore
+cependant dans toutes les directions sans distinction. Il est cependant possible
+d'utiliser l'algorithme A* pour essayer d'orienter cette recherche. À vous de
+trouver une approximation du chemin restant à parcourir adaptée au problème.
+
+<a name="strategie-base"></a>
 ### Stratégie de base
 
+La stratégie de base pour le joueur consiste à trouver pour chaque pion
+l'objectif le plus proche et à s'y rendre :
+
+* s'il reste des objectifs ou des sorties à trouver, sa porte la plus proche ;
+* si tout est trouvé, son objectif ;
+* si les objectifs sont remplis sa sortie ;
+
+Une fois le plus court chemin obtenu, s'il commence par la direction du joueur,
+il déplace le pion. Attention, lorsque le plus court chemin n'est pas unique, il
+pourrait y avoir blocage si deux joueurs ne considèrent pas le même chemin.
+Pensez-vous pouvoir résoudre ce problème ?
+
+<a name="bonus"></a>
 ### Bonus
+
+N'attaquez les bonus que si le reste fonctionne. Ces bonus sont des pistes pour
+continuer le travail, si vous en trouvez d'autres, faites vous plaisir.
+
+#### Téléportation
+
+Ajouter un nouveau type de site, les téléporteurs, et faites en sorte de les
+gérer dans vos graphes et recherches de plus court chemin.
 
 #### Gérer plusieurs aventuriers
 
-#### Réduire le graphe
+Nous avons jusqu'à présent omis une règle importante du jeu :  les aventuriers
+ne peuvent pas se croiser sur la même case. Pensez-vous pouvoir gérer le
+problème ?
 
-#### Téléportation
+#### Accélérer la recherche
+
+Lorsque l'aventurier et son objectif ne sont pas sur la même tuile, l'aventurier
+va devoir passer de tuile en tuile. Ne serait-il pas possible d'augmenter le
+graphe avec des noeuds supplémentaires, et de précalculer le chemin de porte en
+porte pour ne pas avoir à recalculer les chemins à l'intérieur des tuiles
+traversées ?
+
+[//]: # "}}}"
