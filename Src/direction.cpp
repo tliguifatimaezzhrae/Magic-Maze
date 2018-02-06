@@ -14,7 +14,7 @@ const char* nom(Direction d) {
   static const char* noms[4] {
     "bas", "droite", "haut", "gauche"
   } ;
-  return names[(int) d] ;
+  return noms[(int) d] ;
 }
 
 } //end of namespace MMaze

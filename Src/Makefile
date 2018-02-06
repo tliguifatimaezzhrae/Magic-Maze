@@ -8,6 +8,7 @@ SOURCES += case.cpp
 SOURCES += mur.cpp
 SOURCES += couleurs.cpp
 SOURCES += tuile.cpp
+SOURCES += direction.cpp
 
 OBJECTS = $(SOURCES:.cpp=.o)
 
