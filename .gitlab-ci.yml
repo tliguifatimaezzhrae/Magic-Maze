@@ -1,0 +1,94 @@
+# defaults
+image: patkub/docker-make-valgrind
+cache:
+  untracked: true
+
+########## melangeur ##########
+
+melangeur-build:
+  stage: build
+  script:
+    - cd Src
+    - make test_melangeur
+  artifacts:
+    paths:
+      - Src/test_melangeur
+
+melangeur-test:
+  stage: test
+  script:
+    - valgrind --leak-check=full --error-exitcode=1 Src/test_melangeur
+  dependencies:
+    - melangeur-build
+
+########## paquet ##########
+
+paquet-build:
+  stage: build
+  script:
+    - cd Src
+    - make test_paquet
+  artifacts:
+    paths:
+      - Src/test_paquet
+
+paquet-test:
+  stage: test
+  script:
+    - valgrind --leak-check=full --error-exitcode=1 Src/test_paquet
+  dependencies:
+    - paquet-build
+
+########## rotation ##########
+
+rotation-build:
+  stage: build
+  script:
+    - cd Src
+    - make test_rotation
+  artifacts:
+    paths:
+      - Src/test_rotation
+
+rotation-test:
+  stage: test
+  script:
+    - valgrind --leak-check=full --error-exitcode=1 Src/test_rotation
+  dependencies:
+    - rotation-build
+
+########## tuile ##########
+
+tuile-build:
+  stage: build
+  script:
+    - cd Src
+    - make test_tuile
+  artifacts:
+    paths:
+      - Src/test_tuile
+
+tuile-test:
+  stage: test
+  script:
+    - valgrind --leak-check=full --error-exitcode=1 Src/test_tuile
+  dependencies:
+    - tuile-build
+
+########## chemin ##########
+
+chemin-build:
+  stage: build
+  script:
+    - cd Src
+    - make test_chemin
+  artifacts:
+    paths:
+      - Src/test_chemin
+
+chemin-test:
+  stage: test
+  script:
+    - valgrind --leak-check=full --error-exitcode=1 Src/test_chemin
+  dependencies:
+    - chemin-build
