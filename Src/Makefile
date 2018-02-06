@@ -6,6 +6,8 @@ SOURCES =
 SOURCES += melangeur.cpp
 SOURCES += case.cpp
 SOURCES += mur.cpp
+SOURCES += couleurs.cpp
+SOURCES += tuile.cpp
 
 OBJECTS = $(SOURCES:.cpp=.o)
 
@@ -32,6 +34,21 @@ $(MELANGEUR_OBJECTS): %.o : %.cpp
 all : test_melangeur
 TARGETS += test_melangeur
 CLEAN_OBJECTS += $(MELANGEUR_OBJECTS)
+
+########## test_tuile ##########
+
+TUILE_SOURCES = test_tuile.cpp
+TUILE_OBJECTS = $(TUILE_SOURCES:.cpp=.o)
+
+test_tuile : $(TUILE_OBJECTS) $(OBJECTS) $(HEADERS)
+	$(CXX) $(TUILE_OBJECTS) $(OBJECTS) -o $@ $(LDFLAGS)
+	
+$(TUILE_OBJECTS): %.o : %.cpp
+	$(CXX) -MMD $(CXXFLAGS) -c $< -o $@
+
+all : test_tuile
+TARGETS += test_tuile
+CLEAN_OBJECTS += $(TUILE_OBJECTS)
 
 ########## cleanup ##########
 DEPS = $(CLEAN_OBJECTS:.o=.d)
