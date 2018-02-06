@@ -232,6 +232,8 @@ telle tuile, et toutes les tuiles découvertes ensuite sont des tuiles
 
 ![tuile classique](Images/magic-maze_classique.jpg)
 
+Ces ilustrations sont tirées du jeu original, illustré par Gyom.
+
 #### Portes
 
 Les portes pour passer de tuile en tuile sont toujours placées aux mêmes
