@@ -249,6 +249,9 @@ Pour pouvoir étudier le jeu, vous programmerez ensuite un générateur de tuile
 Ce générateur permettra de générer des tuiles au hasard et vérifier que vos
 algorithmes fonctionnent correctement.
 
+Les sources fournies avec le projet contiennent un couple de fichiers
+`tuile.[hc]pp` de base avec une fonction d'affichage simple.
+
 #### Dimension des tuiles
 
 Comme indiqué plus haut, une tuile est un carré de 4x4 cases. 
@@ -467,6 +470,9 @@ abattu.
 
 <a name="resultat"></a>
 ### Résultat
+
+En modifiant la fonction d'affichage pour faire apparaître vos portes, vous
+devriez pouvoir obtenir des tuiles semblables aux suivantes :
 
 ```
 +---+---+ ^ +---+   +---+---+ ^ +---+   +---+---+---+---+
