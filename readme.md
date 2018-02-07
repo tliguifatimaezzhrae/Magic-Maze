@@ -474,7 +474,7 @@ abattu.
 En modifiant la fonction d'affichage pour faire apparaître vos portes, vous
 devriez pouvoir obtenir des tuiles semblables aux suivantes :
 
-```
+```txt
 +---+---+ ^ +---+   +---+---+ ^ +---+   +---+---+---+---+
 |       |   |   |   |       |       |   |               |
 +   +   +   +   +   +   +   +   +   +   +---+   +   +   +
@@ -495,6 +495,36 @@ devriez pouvoir obtenir des tuiles semblables aux suivantes :
 |   |       |   |   |   |   |       |   |   |   |       |
 +---+ v +---+---+   +---+ v +---+---+   +---+ v +---+---+
 ```
+
+<a name="format_fichier"></a>
+### Format de fichier commun
+
+Pour échanger par la suite, nous utiliserons le format suivant pour écrire
+une tuile dans un fichier :
+
+```txt
+tuile
+mur 1
+mur 2
+...
+mur 22
+site 2 porte orange
+site 4 porte vert
+site 0 sortie vert
+...
+fin
+```
+Les règles sont les suivantes :
+
+* la description d'une tuile commence par le mot `tuile`
+* la description d'une tuile finit par le mot `fin`
+* la description d'un mur se fait sur une seule ligne et commence par `mur`
+* après le mot `mur` se trouve le numéro du mur, tel que défini précédemment
+* la description d'un site se fait sur une seule ligne et commence par le mot `site`
+* après le mot `site` se trouvent :
+    * la case du site numérotée comme précédemment
+    * le type de site (porte, départ, objectif ou sortie)
+    * la couleur du site (jaune, vert, orange, violet, aucune pour un accès)
 
 [//]: # "}}}"
 
