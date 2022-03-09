@@ -52,10 +52,10 @@ Case Case::droite() const {
 
 Case Case::voisine(Direction d) const {
   switch(d) {
-    case BAS : return bas() ;
-    case DROITE : return droite() ;
-    case HAUT : return haut() ;
-    case GAUCHE : return gauche() ;
+    case Direction::BAS : return bas() ;
+    case Direction::DROITE : return droite() ;
+    case Direction::HAUT : return haut() ;
+    case Direction::GAUCHE : return gauche() ;
     default : assert(false) ;
   }
 }
@@ -63,6 +63,14 @@ Case Case::voisine(Direction d) const {
 unsigned int Case::operator[](unsigned int i) const {
   assert(i < 2) ;
   if(i == 0) return index_ / 4 ;
+  return index_ % 4 ;
+}
+
+unsigned int Case::ligne() const {
+  return index_ / 4 ;
+}
+
+unsigned int Case::colonne() const {
   return index_ % 4 ;
 }
 

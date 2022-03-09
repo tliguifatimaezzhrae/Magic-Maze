@@ -44,6 +44,8 @@ class Case {
 
     //ligne et colonne de la case
     unsigned int operator[](unsigned int i) const ;
+    unsigned int ligne() const ;
+    unsigned int colonne() const ;
 
     //rotation de la case
     Case tourne(int rotation) const ;

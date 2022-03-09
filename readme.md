@@ -8,12 +8,11 @@
     * [Réalisation](#realisation)
 1. [Présentation du jeu](#presentation-du-jeu)
     * [Principe du jeu](#principe-du-jeu)
-    * [Aventuriers](#aventuriers)
+    * [Aventurières](#aventurières)
     * [Tuiles supermarché](#tuiles-supermarche)
     * [Cases spéciales](#cases-speciales)
     * [Déroulement de la partie](#deroulement-partie)
 1. [Votre travail](#votre-travail)
-    * [Mélangeur générique](#melangeur-generique)
     * [Génération de tuiles](#generation-tuiles)
     * [Plus courts chemins dans une tuile](#chemin-tuile)
     * [Gestion du supermarché](#gestion-supermarche)
@@ -29,10 +28,10 @@
 <a name="objectif"></a>
 ### Objectif
 
-Le but de ce projet est la réalisation d'un joueur automatique pour le jeu
+Le but de ce projet est la réalisation d'un robot automatique pour le jeu
 [Magic Maze](https://www.youtube.com/watch?v=yWAwm46h3U0). Magic Maze est un jeu
-de société de Kasper Lapp où les joueurs doivent orienter des aventuriers dans
-un supermarché pour réaliser des objectifs. Votre joueur devra donc être en
+de société de Kasper Lapp où les joueuses doivent orienter des aventurières dans
+un supermarché pour réaliser des objectifs. Votre robot devra donc être en
 mesure de calculer à partir d'une situation de jeu les meilleurs coups à jouer.
 
 <a name="competences-visees"></a>
@@ -40,35 +39,35 @@ mesure de calculer à partir d'une situation de jeu les meilleurs coups à jouer
 
 Ce projet vous fera mettre en pratique les algorithmes et structures de données
 vus en cours pour résoudre un problème réel. Le projet s'articule autour des
-algorithmes de recherche de plus courts chemins dans les graphes. La
-modélisation du problème ainsi que les algorithmes de plus courts chemins feront
-appel à des structures de données étudiées cette année ou les années
-précédentes, en particulier des files, parfois à priorité, et probablement des
-structures adaptées à des problèmes de type dictionnaire. À l'issue de ce
-projet, vous devriez donc être en mesure d'utiliser ces algorithmes et
-structures de données pour les problèmes pratiques que vous pourriez rencontrer
-dans la suite de votre carrière.
+algorithmes d'union find et de recherche de plus courts chemins dans les
+graphes. La modélisation du problème ainsi que les algorithmes de plus courts
+chemins feront appel à des structures de données étudiées cette année ou les
+années précédentes, en particulier des files, parfois à priorité, et
+probablement des structures adaptées à des problèmes de type dictionnaire. À
+l'issue de ce projet, vous devriez donc être en mesure d'utiliser ces
+algorithmes et structures de données pour les problèmes pratiques que vous
+pourriez rencontrer dans la suite de votre carrière.
 
 <a name="realisation"></a>
 ### Réalisation
 
 Vous réaliserez ce projet en binômes. Ce projet sera rendu avant la dernière
 séance de TP du semestre. Durant cette dernière séance, les binômes proposeront
-une démonstration de leur travail, et auront un petit entretien avec leur chargé
-de TP pour expliquer leur code, la pertinence des choix de structures de
-données, les complexités associées, les difficultés rencontrées, ainsi que les bugs
-éventuels.
+une démonstration de leur travail, et auront un petit entretien avec leur
+chargé·e de TP pour expliquer leur code, la pertinence des choix de structures
+de données, les complexités associées, les difficultés rencontrées, ainsi que
+les bugs éventuels.
 
 Votre projet devra être codé en C++. Vous êtes autorisés à utiliser l'ensemble
 des fonctionnalités de la bibliothèque standard C++, en particulier les
 conteneurs et les algorithmes. Pensez cependant à consulter les complexités de
 ces structures et algorithmes pour vous assurer qu'ils sont appropriés au
-problème sur lequel elles sont utilisées. Votre code doit être personnel, mais
-vous êtes utilisés à reprendre du code trouvé en ligne tant qu'il ne s'agit pas
+problème sur lequel ils sont utilisés. Votre code doit être personnel, mais vous
+êtes autorisé·es à reprendre du code trouvé en ligne tant qu'il ne s'agit pas
 explicitement des solutions complètes des exercices. Ces morceaux de code
-devront être clairement indiqués en commentaires comme repris, avec le lien vers
-les pages sur lesquelles le code a été trouvé, et la licence du code lorsqu'elle
-est fournie.
+devront être **clairement indiqués en commentaires comme repris**, avec le lien
+vers les pages sur lesquelles le code a été trouvé, et la licence du code
+lorsqu'elle est fournie.
 
 [//]: # "}}}"
 
@@ -80,21 +79,21 @@ est fournie.
 <a name="principe-du-jeu"></a>
 ### Principe du jeu
 
-Dans le jeu Magic Maze, quatre aventuriers commencent au beau milieu d'un
-supermarché. Les joueurs devront les déplacer pour petit à petit découvrir de
+Dans le jeu Magic Maze, quatre aventurières commencent au beau milieu d'un
+supermarché. Les joueuses devront les déplacer pour petit à petit découvrir de
 nouvelles zones du supermarché jusqu'à avoir découvert les objectifs des quatre
-aventuriers, et les sorties du supermarché. Une fois les objectifs découverts,
-les aventuriers doivent s'y rendre, puis ressortir du supermarché. Le tout doit
-être réussi en temps limité. Tous les joueurs contrôlent en même temps tous les
-aventuriers, mais chaque joueur ne peut déplacer les aventuriers que dans une
-seule direction (haut, bas, gauche, droite) qui lui est indiquée en début de
-partie. Les joueurs doivent donc se coordonner pour déplacer les pions, mais
+aventurières, et les sorties du supermarché. Une fois les objectifs découverts,
+les aventurières doivent s'y rendre, puis ressortir du supermarché. Le tout doit
+être réussi en temps limité. Toutes les joueuses contrôlent en même temps toutes
+les aventurières, mais chaque joueuse ne peut déplacer les aventurières que dans
+une seule direction (haut, bas, gauche, droite) qui lui est indiquée en début de
+partie. Les joueuses doivent donc se coordonner pour déplacer les pions, mais
 n'ont en plus que très rarement le droit de se parler pour se mettre d'accord.
 
-<a name="aventuriers"></a>
-### Aventuriers
+<a name="aventurières"></a>
+### Aventurières
 
-Les aventuriers sont matérialisés par des pions de couleur, placés sur le
+Les aventurières sont matérialisées par des pions de couleur, placés sur le
 plateau de jeu. Leur couleur sert à identifier les éléments du plateau qui leur
 correspondent (portes, objectifs, sorties). Les couleurs sont le jaune, le
 violet, le vert et le orange.
@@ -105,23 +104,23 @@ violet, le vert et le orange.
 Le supermarché est matérialisé par des tuiles. Une tuile est un carré de 4x4
 cases. Les cases peuvent être :
 
-1. des couloirs, par lesquels les aventuriers peuvent se déplacer ;
-1. des boutiques dans lesquelles les aventuriers ne peuvent pas aller.
+1. des couloirs, par lesquels les aventurières peuvent se déplacer ;
+1. des boutiques dans lesquelles les aventurières ne peuvent pas aller.
 
 Sur le bord des tuiles se trouvent des portes pour accéder aux tuiles voisines.
 Les portes sont toujours placées aux mêmes endroits, il y en a au maximum quatre.
-Chaque porte porte la couleur d'un aventurier (jaune, violet, vert, orange), une
+Chaque porte porte la couleur d'une aventurière (jaune, violet, vert, orange), une
 tuile n'aura jamais deux portes de la même couleur. Les portes sont accessibles
 via des cases couloir, et les cases couloir sont placées de telle sorte qu'il
 soit toujours possible de trouver un chemin pour aller de n'importe quelle case
 couloir à n'importe quelle autre.
 
-Lorsqu'un aventurier atteint une case avec une porte, si l'aventurier est de la
+Lorsqu'une aventurière atteint une case avec une porte, si l'aventurière est de la
 même couleur que la porte il est alors possible de découvrir une nouvelle tuile
 du supermarché, qui viendra se placer de l'autre côté de la porte. Les tuiles
 ont une marque indiquant quelle porte de la nouvelle tuile vient se placer à
 côté de la porte utilisée pour la découvrir. Une fois qu'une tuile est placée,
-tous les aventuriers peuvent y accéder par n'importe quelle porte (en respectant
+toutes les aventurières peuvent y accéder par n'importe quelle porte (en respectant
 les règles de déplacement).
 
 Les nouvelles tuiles sont piochées au hasard, ce qui fait qu'à chaque partie
@@ -130,40 +129,39 @@ l'agencement du supermarché est différent.
 <a name="cases-speciales"></a>
 ### Cases spéciales
 
-Certaines cases sont particulières. Pour simplifier les règles du jeu, nous ne
-considérerons dans un premier temps que deux cases spéciales (il y en a plus
-dans le jeu réel):
+Pour simplifier les règles du jeu, nous ne considérerons dans un premier temps
+que deux cases spéciales (il y en a plus dans le jeu réel):
 
-1. les cases objectif, il y en a une par aventurier pour tout le supermarché, de
-  la couleur de l'aventurier ;
-1. les cases sorties, il y en a également une par aventurier pour tout le
-  supermarché, de la couleur de l'aventurier.
+1. les cases objectif, il y en a une par aventurière pour tout le supermarché, de
+  la couleur de l'aventurière ;
+1. les cases sorties, il y en a également une par aventurière pour tout le
+  supermarché, de la couleur de l'aventurière.
 
 <a name="deroulement-partie"></a>
 ### Déroulement de la partie
 
 En début de partie, une tuile de départ est utilisée. Cette tuile est telle que
-les quatre cases centrales sont des couloirs, et les aventuriers sont répartis
-aléatoirement sur ces quatre cases. Chaque joueur se voit attribuer une
-direction : haut, bas, gauche, droite (le jeu réelle donne éventuellement
-quelques rôles supplémentaires aux joueurs, mais nous en resterons aux
-directions dans un premier temps). Les joueurs jouent tous en même temps et
-peuvent déplacer tous les aventuriers dans leur direction. Lors d'un déplacement
-dans une direction, l'aventurier peut être déplacé d'autant de cases que
-souhaité, tant qu'il reste sur des cases couloir et ne passe pas par une case
-occupée par un autre aventurier.
+les quatre cases centrales sont des couloirs, et les aventurières sont réparties
+aléatoirement sur ces quatre cases. Chaque joueuse se voit attribuer une
+direction : haut, bas, gauche, droite (le jeu réel donne éventuellement
+quelques rôles supplémentaires aux joueuses, mais nous en resterons aux
+directions dans un premier temps). Les joueuses jouent tous en même temps et
+peuvent déplacer toutes les aventurières dans leur direction. Lors d'un déplacement
+dans une direction, l'aventurière peut être déplacée d'autant de cases que
+souhaité, tant qu'elle reste sur des cases couloir et ne passe pas par une case
+occupée par un autre aventurière.
 
-Les joueurs doivent :
+Les joueuses doivent :
 
-1. trouver les cases objectif de tous les aventuriers, et faire en sorte que
-   tous les aventuriers soient en même temps sur leur case objectif.
-1. faire sortir tous les aventuriers du supermarché par la case sortie qui leur
+1. trouver les cases objectif de toutes les aventurières, et faire en sorte que
+   toutes les aventurières soient en même temps sur leur case objectif.
+1. faire sortir toutes les aventurières du supermarché par la case sortie qui leur
    correspond.
 
 Ces objectifs doivent être remplis dans un temps limité. Pour simplifier les
-règles, nous considèrerons que le joueur automatique doit chercher et utiliser
+règles, nous considèrerons que le robot automatique doit chercher et utiliser
 les chemins les plus courts possibles (en terme de nombre de coups à réaliser)
-pour amener les aventuriers aux portes de leur couleur et découvrir le
+pour amener les aventurières aux portes de leur couleur et découvrir le
 supermarché, puis pour les emmener à leurs objectifs ou leurs sorties.
 
 [//]: # "}}}"
@@ -173,91 +171,32 @@ supermarché, puis pour les emmener à leurs objectifs ou leurs sorties.
 
 [//]: # "{{{"
 
-Votre travail consiste à élaborer un joueur automatique pour jouer au jeu Magic
-Maze. Le joueur devra être en mesure de décider pour chaque aventurier, étant
-donné une situation de jeu, s'il doit le déplacer ou non, et jusqu'où.
+Votre travail consiste à élaborer un robot automatique pour jouer au jeu Magic
+Maze. Le robot devra être en mesure de décider pour chaque aventurière, étant
+donné une situation de jeu, s'il doit la déplacer ou non, et jusqu'où.
 
 Ce projet s'articule autour de plusieurs sous-parties. Les premières parties
 consistent à vous doter d'outils pour modéliser le jeu. Vous étudierez ensuite
-comment calculer les déplacements nécessaires pour amener un aventurier à une
+comment calculer les déplacements nécessaires pour amener une aventurière à une
 position donnée en utilisant le moins de coups possibles.
-
-<a name="melangeur-generique"></a>
-### Mélangeur générique
-
-[//]: # "{{{"
-
-Pour générer des tuiles de supermarché et gérer des parties, le premier outil
-que nous vous proposons de programmer est un *mélangeur*. Ce mélangeur pourra
-ensuite être utilisé pour générer aléatoirement des tuiles de jeu, ou gérer la
-pioche de tuiles dans une partie par exemple.
-
-#### Fonctionnalités
-
-Un mélangeur est une structure dans laquelle vous pourrez ajouter des éléments
-ou en retirer. Vous ne pouvez retirer des éléments que s'il y en a dedans. À
-chaque retrait, l'élément renvoyé est choisi aléatoirement parmis les éléments
-présents dans le mélangeur, puis retiré. Votre mélangeur proposera donc les
-fonctionnalités suivantes :
-
-* construction produisant un mélangeur vide
-* destruction libérant toute mémoire possédée par le mélangeur
-* ajout d'un élément
-* retrait d'un élément
-* consultation du nombre d'éléments présents
-
-#### Généricité
-
-Ne sachant pas a priori ce que nous allons mettre comme éléments dans le
-mélangeur, mais étant donné qu'il pourra être utile en différents points du
-projet, vous utiliserez le concept des adresses génériques pour rendre votre
-structure de données adaptable à de nombreux types de données. Le principe est
-donc le suivant :
-
-* votre structure de données travaille en manipulant des octets sans savoir ce
-  qu'ils représentent. La seule information connue et fournie à la construction
-  de la structure est le nombre d'octets nécessaires pour un élément.
-* chaque nouvel élément à insérer vous sera fourni par une adresse générique de
-  type `void *`. À cette adresse se trouveront les octets de l'éléments à
-  insérer.
-* à chaque retrait, une adresse générique est fournie pour y recopier les octets
-  de l'élément retiré. Il est supposé qu'à cette adresse, le nombre d'octets
-  disponible est suffisant pour stocker l'objet.
-
-#### Code de base
-
-Vous trouverez dans le dépôt ci-présent des fichiers `melangeur.[hc]pp`, un
-fichier de test `test_melangeur.cpp` et un `Makefile` pour les compiler. Le code
-compile, mais les tests ne passent pas car le mélangeur ne fait absolument rien.
-
-#### Avertissement pour la suite
-
-Ce type de généricité utilisée en C casse le mécanisme des constructeurs et
-destructeurs du C++ : lorsque vous insérez ou retirez un élément dans votre
-mélangeur, aucun constructeur ou destructeur n'est appelé. Faites donc bien
-attention à vous assurer que les éléments que vous stockez dans le mélangeur
-peuvent être manipulés de cette façon.
-
-[//]: # "}}}"
 
 <a name="generation-tuiles"></a>
 ### Génération de tuiles
 
 [//]: # "{{{"
 
-Pour pouvoir étudier le jeu, vous programmerez ensuite un générateur de tuiles.
-Ce générateur permettra de générer des tuiles au hasard et vérifier que vos
-algorithmes fonctionnent correctement.
+Pour pouvoir travailler sur le jeu, vous programmerez d'abord un générateur de
+tuiles. Ce générateur permettra de générer des tuiles au hasard et vérifier que
+vos algorithmes fonctionnent correctement.
 
-Les sources fournies avec le projet contiennent un couple de fichiers
-`tuile.[hc]pp` de base avec une fonction d'affichage simple.
+![exemple plateau](Images/example_board.svg)
 
 #### Dimension des tuiles
 
 Comme indiqué plus haut, une tuile est un carré de 4x4 cases. 
 Pour nous faciliter la vie par la suite, nous les numéroterons comme suit :
 
-```
+```cpp
 +---+---+---+---+
 | 0 | 1 | 2 | 3 |
 +---+---+---+---+
@@ -270,7 +209,53 @@ Pour nous faciliter la vie par la suite, nous les numéroterons comme suit :
 ```
 
 Des fichier `case.[hc]pp` vous sont fournis pour vous aider à manipuler cette
-numérotation.
+numérotation. Vous n'êtes cependant pas obligé·es de les utiliser si vous n'en
+voyez pas l'utilité. Le principe de cette classe n'est pas de stocker des
+données relatives au cases, mais simplement de proposer un ensemble de méthodes
+pour facilement accéder aux différents éléments du jeu. La classe ne contient
+qu'un entier, et ne prend donc pas plus de place en mémoire qu'un entier, mais
+elle permet également d'obtenir les cases voisines, ou de faire la conversion
+entre les indices des cases et leurs coordonnées ligne / colonne. Il est donc
+déconseillé de modifier cette classe pour y stocker des données supplémentaires.
+
+```cpp
+//creation a partir de l'indice
+{
+  Case c(6) ;
+  std::cout << c.ligne() << std::endl ; //1
+  std::cout << c.colonne() << std::endl ; //2
+}
+
+//creation a partir de ligne et colonne
+{
+  Case c(1,2) ;
+  std::cout << c.index() << std::endl ; // 6
+}
+
+//récupération des cases voisines de la case 10
+{
+  Case c(10) ;
+  Case haut = c.haut() ; //utilisation de la méthode dédiée
+  Case bas = c.voisine(BAS) ; //utilisation de la méthode générique
+  //itération sur les voisins
+  for(int i = 0; i < 4, ++i) {
+    Case v = c.voisine((Direction) i) ;
+  }
+}
+
+//test de l'existence d'une case voisine
+{
+  Case c(11) ;
+  try {
+    Case droite = c.droite() ; //lance une exception
+    //la suite ne sera pas éxécutée
+    std::cout << "la case a une voisine droite" << std::endl ;
+  } catch (std::exception& e) {
+    //on passera par là car c.droite() n'existe pas pour la case 11
+    std::cout << "la case n'a pas de voisine droite" << std::endl ;
+  }
+}
+```
 
 #### Types de tuiles
 
@@ -281,11 +266,15 @@ telle tuile, et toutes les tuiles découvertes ensuite sont des tuiles
 
 * une tuile de départ :
 
-![tuile de départ](Images/magic-maze_depart.jpg)
+<center>
+<img alt="tuile de départ" src="Images/magic-maze_depart.jpg" width=300px/>
+</center>
 
 * une tuile classique :
 
-![tuile classique](Images/magic-maze_classique.jpg)
+<center>
+<img alt="tuile classique" src="Images/magic-maze_classique.jpg" width=300px/>
+</center>
 
 Ces ilustrations sont tirées du jeu original, illustré par Gyom.
 
@@ -295,13 +284,13 @@ Les portes pour passer de tuile en tuile sont toujours placées aux mêmes
 endroits, au niveau des cases 2, 4, 11 et 13. 
 
 Une tuile de départ à toujours quatre portes, une de la couleur de chaque
-aventurier. 
+aventurière. 
 
 Une tuile classique a une porte d'accès qui n'a pas de couleur particulière :
 c'est par cette porte qu'on entre sur la tuile pour la première fois lorsqu'on
 traverse la porte d'une autre tuile. Cette porte est marquée d'une flèche sur
 l'image ci-dessus. Par convention, nous générerons des tuiles classiques avec
-cet accès sur la case 13. Les trois autres portes ne sont pas nécessairement
+cet accès **sur la case 13**. Les trois autres portes ne sont pas nécessairement
 utilisées, mais au moins une porte permettra de sortir de la tuile. Si une tuile
 classique comporte plusieurs portes, il n'y en aura pas deux de la même couleur.
 
@@ -315,9 +304,9 @@ Sur une tuile de départ les pions commencent sur les quatre cases centrales : 5
 Les *sites* sont des cases particulières sur une tuile. Une porte est un site.
 En plus des portes, une case peut être garnie de quelques points d'intérêt.
 Comme mentionné plus haut, pour vous simplifier la vie, nous ne considérerons
-pour l'instant que les objectifs des aventuriers et leurs sorties. Pour la case
+pour l'instant que les objectifs des aventurières et leurs sorties. Pour la case
 de départ, il y aura également quatre sites correspondant aux points de départ
-des aventuriers.
+des aventurières.
 
 Pour résumer un site peut être :
 
@@ -326,7 +315,7 @@ Pour résumer un site peut être :
 * une sortie
 * un point de départ
 
-Le placement des sites est soumis à quelques rèclges :
+Le placement des sites est soumis à quelques règles :
 
 * deux sites ne peuvent pas être sur la même case
 * il n'y a ni objectif ni sortie sur une tuile de départ
@@ -339,7 +328,7 @@ Le placement des sites est soumis à quelques rèclges :
 Entre les cases se trouvent éventuellement des murs. Dans la suite, si nous
 avons besoin de numéroter les murs, ils seront numérotés comme suit :
 
-```
+```cpp
 +---+---+---+---+
 |   12  16  20  |
 + 0 + 1 + 2 + 3 +
@@ -352,7 +341,40 @@ avons besoin de numéroter les murs, ils seront numérotés comme suit :
 ```
 
 Des fichiers `mur.[hc]pp` vous sont fournis pour vous aider à manipuler ces
-indices.
+indices. De même si vous n'en voyez aucune utilité, vous n'êtes pas obligé de
+les utiliser. Comme pour les cases, cette case n'a pas pour but de stocker des
+informations, mais seulement de manipuler les indices. Elle vous permet
+facilement d'accéder aux cases voisines d'un mur ou aux murs voisins d'une case
+:
+
+```cpp
+//cases voisines du mur 12
+{
+  Mur m(12) ;
+  Case gauche = m[0] ;
+  Case droite = m[1] ;
+}
+
+//cases voisines du mur 5
+{
+  Mur m(5)
+  Case haut = m[0] ;
+  Case bas = m[1] ;
+}
+
+
+//creation du mur entre les cases 5 et 9
+{
+  Mur m(Case(5), Case(9)) ;
+}
+
+//acces au mur droit de la case 8
+{
+  Case c(9)
+  Mur m(c, c.droite()) ;
+}
+
+```
 
 #### Principe de la génération
 
@@ -367,86 +389,34 @@ Pour générer les tuiles, vous commencerez par suivre le principe suivant :
 
 #### Union-find
 
-Dans le déroulé précédent, l'étape consistant à briser les murs comporte une
-subtilité : il est nécessaire de déterminer si tous les sites sont reliés entre
-eux. Pour réaliser ce test, vous utiliserez la structure d'*Union-Find*, célèbre
-pour gérer des problèmes de types *classes d'équivalence*. Le principe est le
-suivant :
+Pour abattre les murs de la tuile en respectant les contraintes, vous utiliserez
+l'algorithme d'union-find, [présenté dans un autre
+TP](https://forge.univ-lyon1.fr/lifap6/tp-union-find-etu). Cet algorithme permet
+de gérer un ensemble de classes d'équivalences. Dans notre cas, nous dirons que
+deux cases sont équivalentes s'il existe un chemin de l'une à l'autre dans la
+tuile. Initialement, vu que tous les murs sont en place, il n'y a aucun chemin
+d'une case à une autre. Il y a donc une classe d'équivalence par case, ne
+contenant que la case. À chaque mur abattu, s'il n'existait pas de chemin entre
+les cases de part et d'autre mur, abattre le mur en crée un. Ainsi les deux
+cases sont désormais équivalentes, et leurs classes d'équivalences sont
+fusionnées : toutes les cases accessibles depuis la case d'un côté du mur
+deviennent accessible pour toutes les cases accessibles depuis la case de
+l'autre côté du mur, et vice versa.
 
-Nous définissons que de cases sont *équivalentes* s'il existe un chemin pour
-relier l'une à l'autre. Une *classe d'équivalence* est un ensemble de cases
-mutuellement accessibles. Le principe de l'Union-Find est de proposer deux
-opérations :
+Réalisez donc le TP proposé plus haut dans un premier temps pour mettre en place
+votre structure d'union find. Dans le TP, le but est de faire en sorte que
+toutes les cases soient accessibles. Ici par contre, la contrainte est plus
+faible, il s'agit simplement de faire en sorte que tous les sites soient dans la
+même classe d'équivalence. Enfin, il n'est pas problématique d'abattre des
+murs entre deux cases déjà mutuellement accessibles. Lorsque vous étudiez un
+mur, il n'est donc pas nécessaire de faire de vérification sur les cases de part
+et d'autre, vous pouvez l'abattre directement.
 
-* Find : déterminer si deux éléments sont équivalents
-* Union : fusionner deux classes d'équivalence pour les rendre équivalentes
-
-Initialement, tous les murs sont en place, et aucune case n'est équivalente a
-aucune autre. Chaque case est dans sa propre classe d'équivalence qui ne possède
-qu'une case. À chaque mur brisé, une union est réalisée sur les classes
-d'équivalence des deux cases de part et d'autre du mur. La destruction s'arrête
-quand tous les sites sont dans la même classe.
-
-##### Structure de données
-
-Le principe de l'Union-Find est d'associer chaque classe d'équivalence à un
-représentant. Chaque case se voit donc attribuer une case représentante.
-Initialement une case est sa propre représentante.
-
-##### Find
-
-Une opération *Find* consiste à remonter la chaîne de représentants jusqu'à
-trouver une case qui est sa propre représentante. Cette case est la
-représentante de toute la classe. Si une case n'est pas sa propre représentante,
-nous allons voir si sa représentante est sa propre représentante, et ainsi de
-suite. Ne trouvez-vous pas que cette formulation a l'air très récursive ?
-
-##### Union
-
-Pour faire l'union de deux classes (distinctes), il faut aller chercher la case
-représentante de chaque classe. Ces deux cases sont leur propres représentantes.
-Il suffit alors de placer l'une comme représentante de l'autre. 
-
-##### Compression de chemin
-
-Pour améliorer la complexité des requêtes sur cette structure, il est possible
-de modifier légèrement l'opération find pour faire en sorte que lorsqu'on
-demande la représentante d'une case, une fois cette représentante calculée, elle
-est directement stockée comme représentante de la case. De cette façon, la fois
-suivante, il ne sera plus nécessaire de remonter tout le chemin pour trouver la
-représentante. Et si votre focmulation est récursive, toutes les cases par
-lesquelles nous passons pour chercher une représentante stockeront par la suite
-directement cette représentante.
-
-##### Limiter la hauteur
-
-Notre structure de données est un arbre, avec des liens de bas en haut (des
-feuilles vers la racine : la représentante). Le pire cas d'une recherche de
-représentante consiste à parcourir l'arbre de bas en haut. Pour limiter la
-complexité, il est donc possible de limiter la hauteur des arbres.
-
-Pour chaque case, nous ajoutons en plus une *approximation* de la hauteur de
-l'arbre qui a cette case pour représentante. Notez bien qu'il s'agit d'une
-approximation et non d'une valeur exacte, qui serait très difficile à calculer
-lorsque la compression de chemin est utilisée. Initialement la profondeur d'une
-classe ne contenant qu'un élément est de 1.
-
-Lors d'une fusion, une fois déterminées les deux représentantes, nous comparons
-leurs hauteurs. Si l'une des deux a une hauteur strictement plus grande à
-l'autre, alors la case la moins haute prend la case la plus haute comme
-représentante, ce qui ne modifie pas les hauteurs. Si les deus hauteurs sont
-égales, l'une ou l'autre est choisie comme représentante, et sa hauteur est
-cette-fois augmentée de 1.
-
-##### Complexité
-
-Munis de ces optimisations, la complexité d'une requête *Find* ou *Union* en
-fonction du nombre d'éléments présents dans la structure d'union find est
-proportionnelle à la réciproque de [la fonction
-d'Ackermann](https://fr.wikipedia.org/wiki/Fonction_d%27Ackermann). Cette
-fonction est compliquée, mais ce qu'il faut en retenir, c'est qu'elle croît
-moins vite que n'importe quel logarithme, et si lentement que pour $`n =
-10^{80}`$ elle vaut environ 4.
+Pour traiter les murs dans un ordre quelconque, vous pourrez utiliser la classe 
+`Melangeur` fournie dans les fichiers `melangeur.[hc]pp` : initialisez un
+mélangeur d'entiers, dans lequel vous injectez les entiers de 0 à 23 (tous les
+indices de mur possibles). Retirer ensuite les entiers un par un et traitez le
+mur correspondant.
 
 <a name="boutiques"></a>
 ### Boutiques
@@ -456,75 +426,66 @@ supprimer les impasses qui seront inutiles au jeu, et relier ensemble les cases
 des boutiques.
 
 Pour supprimer les impasses, vous pouvez itérer tant qu'il existe une case qui
-n'est pas un site et qui n'a qu'un mur adjacent brisé. Cette case est donc une
-impasse, et nous l'isolons en recontruisant le mur adjacent brisé. Lorsque plus
-aucune case ne correpond, les impasses sont considérées comme éliminées.
+n'est pas un site et qui n'a qu'un mur adjacent brisé. Cette case est donc le
+bout d'une impasse, et nous l'isolons en reconstruisant le mur adjacent brisé. 
+Lorsque plus aucune case ne correspond, les impasses sont considérées comme 
+éliminées.
 
 Une fois les impasses supprimées, vous pouvez reconstruire les classes
-d'équivalence qui ont été faussées par les murs reconstruits, en réinitialisant
-la classe de chaque casse, et en fusionnant les classes des cases de part et
-d'autre d'un mur brisé. Ensuuite, pour chaque case il est possible de déterminer
-si elle est accessible depuis les sites (dans la même classe qu'eux) ou non.
-Tout mur qui sépare deux cases qui ne sont pas accessibles depuis les sites est
-abattu.
+d'équivalence qui ont été faussées par les murs reconstruits. Réinitialisez un
+union find avec une classe pour chaque case, et fusionnez les classes des cases
+de part et d'autre d'un mur brisé. Ensuite, pour chaque case il est possible de
+déterminer si elle est accessible depuis les sites (dans la même classe qu'eux)
+ou non. Tout mur qui sépare deux cases qui ne sont pas accessibles depuis les
+sites est abattu.
 
 <a name="resultat"></a>
 ### Résultat
 
-En modifiant la fonction d'affichage pour faire apparaître vos portes, vous
+En utilisant les outils d'affichage fournis dans les fichiers `draw.[hc]pp`
 devriez pouvoir obtenir des tuiles semblables aux suivantes :
 
-```txt
-+---+---+ ^ +---+   +---+---+ ^ +---+   +---+---+---+---+
-|       |   |   |   |       |       |   |               |
-+   +   +   +   +   +   +   +   +   +   +---+   +   +   +
-|           |   |   |       |       |   <   |           |
-+   +   +---+   +   +---+---+---+   +   +   +   +   +   +
-|       |       |   |       |       |   |   |           |
-+---+   +   +   +   +   +   +   +   +   +   +---+   +   +
-|   |   |       |   |               |   |       |       |
-+---+ v +---+---+   +---+ v +---+---+   +---+ v +---+---+
+#### Tuiles de départ
 
-+---+---+---+---+   +---+---+ ^ +---+   +---+---+ ^ +---+
-|               |   |       |       |   |       |       |
-+   +   +   +   +   +   +   +   +   +   +   +---+   +   +
-|               |   <   |       |   |   |   |           |
-+   +   +---+---+   +---+   +---+   +   +   +   +---+---+
-|       |       >   |   |           >   |   |   |       |
-+   +---+   +---+   +   +   +---+---+   +   +   +   +   +
-|   |       |   |   |   |   |       |   |   |   |       |
-+---+ v +---+---+   +---+ v +---+---+   +---+ v +---+---+
+![tuiles de depart](Images/starting_tiles.svg)
+
+#### Tuiles standard
+
+![tuiles standard](Images/standard_tiles.svg)
+
+notez ici que la porte grise du bas est l'entrée de la tuile.
+
+<a name="affichage-tuiles"></a>
+### Export des tuiles
+
+Pour échanger des tuiles ou des ensembles de tuiles ou l'état d'une partie, vous
+pourrez utiliser la format de fichier proposé par les fonctions `save` et `load`
+dans le fichier `draw.hpp`. Ces fonctions exportent l'ensemble des données à
+afficher sous la forme d'un fichier json :
+
+```json
+{
+  "tuiles": [
+    {
+      "position" : [ligne, colonne], //deux entiers
+      "murs" : [true, false, ..., true, false], //24 booleens
+      "sites" : [0, 32, 0, 51, ... , 0] //16 entiers, voir sites.hpp
+    },
+    //...
+  ],
+  "joueurs" : [
+    {
+      "couleur" : c, //entier dans [1,4]
+      "tuile" : [ligne, colonne], //deux entiers
+      "position" : p //entier, voir cases.hpp
+    },
+    //...
+  ]
+}
 ```
 
-<a name="format_fichier"></a>
-### Format de fichier commun
-
-Pour échanger par la suite, nous utiliserons le format suivant pour écrire
-une tuile dans un fichier :
-
-```txt
-tuile
-mur 1
-mur 2
-...
-mur 22
-site 2 porte orange
-site 4 porte vert
-site 0 sortie vert
-...
-fin
-```
-Les règles sont les suivantes :
-
-* la description d'une tuile commence par le mot `tuile`
-* la description d'une tuile finit par le mot `fin`
-* la description d'un mur se fait sur une seule ligne et commence par `mur`
-* après le mot `mur` se trouve le numéro du mur, tel que défini précédemment
-* la description d'un site se fait sur une seule ligne et commence par le mot `site`
-* après le mot `site` se trouvent :
-    * la case du site numérotée comme précédemment
-    * le type de site (porte, départ, objectif ou sortie)
-    * la couleur du site (jaune, vert, orange, violet, aucune pour un accès)
+Pour tester vos plus courts chemins, des ensembles de tuiles pourront vous être
+fournis sous ce format.
 
 [//]: # "}}}"
 
@@ -538,8 +499,8 @@ objectif.
 
 #### Nombre de coups
 
-Dans Magic Maze, chaque joueur est responsable d'une direction. Lorsqu'un joueur
-déplace un aventurier, il peut le déplacer de plusieurs cases à la fois. Ainsi
+Dans Magic Maze, chaque joueuse est responsable d'une direction. Lorsqu'une joueuse
+déplace une aventurière, elle peut la déplacer de plusieurs cases à la fois. Ainsi
 nous considérerons que chaque déplacement dans une direction coûte un coup,
 quelle que soit la longueur du déplacement.
 
@@ -550,21 +511,24 @@ que sa longueur. Vous pourrez ainsi par la suite retrouver les coups à jouer à
 partir de la séquence de noeuds du graphe.
 
 À vous d'élaborer votre structure de données pour le graphe, à partir des
-structures de données de base que vous connaissez.
+structures de données de base que vous connaissez. Vous pourrez vous inspirer de
+la structure de données utilisée dans `draw.[hc]pp` pour stocker l'ensemble de
+tuiles à afficher.
 
 #### Parcours en largeur
 
 Dans votre graphe, il n'y a pas de notion de poids sur les arêtes : chaque arête
 coûte un coup. Étant donné un point de départ et un point d'arrivée, vous pouvez
 donc réaliser un simple parcours en largeur pour trouver le chemin le plus court
-entre les deux.
+entre les deux. Implémentez ce parcours en largeur.
 
 <a name="gestion-supermarche"></a>
 ### Gestion du supermarché
 
 Une fois les tuiles et les chemins fonctionnels, vous pouvez commencer à gérer
 le plateau dans son ensemble. À vous de créer une structure de données pour la
-gestion du supermarché dans son ensemble et l'assemblage des tuiles.
+gestion du supermarché dans son ensemble et l'assemblage des tuiles. Il faudra
+ici faire attention à ce que les coups joués puissent traverser les portes.
 
 #### Rotation des tuiles
 
@@ -574,9 +538,12 @@ mener à cette nouvelle tuile est la porte de la case 2, tout va bien. Dans les
 autres cas il vous faudra faire tourner votre tuile.
 
 Pour vous aider dans la gestion de la rotation des tuiles, les classes `Case` et
-`Mur` sont munies d'une méthode pour les faire tourner. Selon votre
+`Mur` sont munies d'une méthode pour les faire *tourner*. Selon votre
 implémentation d'une tuile, vous pourrez ainsi utiliser ces méthodes pour faire
-tourner toute une tuile.
+tourner toute une tuile. Ces fonctions vous fournissent les indices des cases
+qui se correspondent après une rotation. Si vous ne voyez pas comment les
+utiliser, demandez à votre encadrant·e, et si vous n'avez pas envie de les
+utiliser, vous n'y êtes pas obligés.
 
 #### Connexion des graphes
 
@@ -588,21 +555,20 @@ seul coup de traverser une porte en ligne droite, l'algorithme considérera qu'i
 faut s'arrêter à la porte. À l'inverse, si vous ajoutez une arête de coup 0, il
 serait alors possible par exemple de passer de la case 7 à la case 11 en allant
 vers le bas, puis de traverser la porte gratuitement lors qu'il y a eu un
-changement de direction.
+changement de direction. Essayez donc de trouver une solution qui permette de
+façon pratique de reconnecter les tuiles au fur et à mesure du jeu.
 
 <a name="chemin-supermarche"></a>
 ### Plus court chemin dans le supermarché
 
 Lorsque votre graphe total est réalisé, vous pouvez à nouveau calculer les plus
-courts chemins via un parcours en largeur. Le parcours en largeur explore
-cependant dans toutes les directions sans distinction. Il est cependant possible
-d'utiliser l'algorithme A* pour essayer d'orienter cette recherche. À vous de
-trouver une approximation du chemin restant à parcourir adaptée au problème.
+courts chemins via un parcours en largeur. Pour chercher le plus court chemin
+d'une case à une autre précisément, vous pouvez passer à l'algorithme A*.
 
 <a name="strategie-base"></a>
 ### Stratégie de base
 
-La stratégie de base pour le joueur consiste à trouver pour chaque pion
+La stratégie de base pour le robot consiste à trouver pour chaque pion
 l'objectif le plus proche et à s'y rendre :
 
 * s'il reste des objectifs ou des sorties à trouver, sa porte la plus proche ;
@@ -622,21 +588,24 @@ continuer le travail, si vous en trouvez d'autres, faites vous plaisir.
 
 #### Téléportation
 
-Ajouter un nouveau type de site, les téléporteurs, et faites en sorte de les
-gérer dans vos graphes et recherches de plus court chemin.
+Dans la liste des sites dispobibles, vous trouverez également des vortex. La
+joueuse qui dispose du rôle permettant d'utiliser les vortex a la possibilité
+(tant que les aventurières n'ont pas commis le vol) de prendre une aventurière
+n'importe où et de la téléporter sur un vortex de sa couleur. Du point de vue du
+graphe, cette action supplémentaire revient à relier tous les noeuds du graphe
+vers les vortex avec un coût 1. Attention par contre, ces arêtes ne sont
+utilisables que par les aventurières de la couleur du vortex.
 
-#### Gérer plusieurs aventuriers
+#### Gérer plusieurs aventurières
 
-Nous avons jusqu'à présent omis une règle importante du jeu :  les aventuriers
+Nous avons jusqu'à présent omis une règle importante du jeu :  les aventurières
 ne peuvent pas se croiser sur la même case. Pensez-vous pouvoir gérer le
 problème ?
 
-#### Accélérer la recherche
+#### Gestion du temps
 
-Lorsque l'aventurier et son objectif ne sont pas sur la même tuile, l'aventurier
-va devoir passer de tuile en tuile. Ne serait-il pas possible d'augmenter le
-graphe avec des noeuds supplémentaires, et de précalculer le chemin de porte en
-porte pour ne pas avoir à recalculer les chemins à l'intérieur des tuiles
-traversées ?
+Normalement le jeu doit être réalisé en un temps limité. Des sites
+supplémentaires "sablier" sont présents sur les tuiles pour permettre de
+retourner le sablier. Pensez-vous pouvoir le gérer ?
 
 [//]: # "}}}"

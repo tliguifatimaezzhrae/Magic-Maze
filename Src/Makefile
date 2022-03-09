@@ -1,19 +1,32 @@
-CXX      = g++
+CXX = g++
+CXXFLAGS += -g -Wall -std=c++11 -pedantic
+
+CAIRO_FLAGS = $(shell pkg-config --cflags librsvg-2.0)
+CAIRO_CXXFLAGS = $(if $(CAIRO_FLAGS),$(CAIRO_FLAGS),-DNO_CAIRO)
+
+IMAGICK_FLAGS = $(shell GraphicsMagick++-config --cppflags --cxxflags)
+IMAGICK_CXXFLAGS = $(if $(IMAGICK_FLAGS),$(IMAGICK_FLAGS),-DNO_IMAGICK)
+
+CXXFLAGS += $(CAIRO_CXXFLAGS) $(IMAGICK_CXXFLAGS)
+
+DRAW_LDFLAGS = $(shell pkg-config --libs librsvg-2.0)
+DRAW_LDFLAGS += $(shell GraphicsMagick++-config --ldflags --libs)
+
+LDFLAGS += $(DRAW_LDFLAGS)
 
 .DEFAULT_GOAL := all
 
 SOURCES = 
 SOURCES += melangeur.cpp
+SOURCES += couleurs.cpp
 SOURCES += case.cpp
 SOURCES += mur.cpp
-SOURCES += couleurs.cpp
-SOURCES += tuile.cpp
+SOURCES += site.cpp
 SOURCES += direction.cpp
+SOURCES += console_pad.cpp
+SOURCES += draw.cpp
 
 OBJECTS = $(SOURCES:.cpp=.o)
-
-CXXFLAGS  += -g -Wall -std=c++11 -pedantic
-LDFLAGS +=
 
 $(OBJECTS) : %.o : %.cpp
 	$(CXX) -MMD $(CXXFLAGS) -c $< -o $@
@@ -21,35 +34,20 @@ $(OBJECTS) : %.o : %.cpp
 CLEAN_OBJECTS = $(OBJECTS)
 TARGETS = 
 
-########## test_melangeur ##########
+########## test_draw ##########
 
-MELANGEUR_SOURCES = test_melangeur.cpp
-MELANGEUR_OBJECTS = $(MELANGEUR_SOURCES:.cpp=.o)
+TEST_DRAW_SOURCES = test_draw.cpp
+TEST_DRAW_OBJECTS = $(TEST_DRAW_SOURCES:.cpp=.o)
 
-test_melangeur : $(MELANGEUR_OBJECTS) $(OBJECTS) $(HEADERS)
-	$(CXX) $(MELANGEUR_OBJECTS) $(OBJECTS) -o $@ $(LDFLAGS)
+test_draw : $(TEST_DRAW_OBJECTS) $(OBJECTS) $(HEADERS)
+	$(CXX) $(TEST_DRAW_OBJECTS) $(OBJECTS) -o $@ $(LDFLAGS)
 	
-$(MELANGEUR_OBJECTS): %.o : %.cpp
+$(TEST_DRAW_OBJECTS): %.o : %.cpp
 	$(CXX) -MMD $(CXXFLAGS) -c $< -o $@
 
-all : test_melangeur
-TARGETS += test_melangeur
-CLEAN_OBJECTS += $(MELANGEUR_OBJECTS)
-
-########## test_tuile ##########
-
-TUILE_SOURCES = test_tuile.cpp
-TUILE_OBJECTS = $(TUILE_SOURCES:.cpp=.o)
-
-test_tuile : $(TUILE_OBJECTS) $(OBJECTS) $(HEADERS)
-	$(CXX) $(TUILE_OBJECTS) $(OBJECTS) -o $@ $(LDFLAGS)
-	
-$(TUILE_OBJECTS): %.o : %.cpp
-	$(CXX) -MMD $(CXXFLAGS) -c $< -o $@
-
-all : test_tuile
-TARGETS += test_tuile
-CLEAN_OBJECTS += $(TUILE_OBJECTS)
+all : test_draw
+TARGETS += test_draw
+CLEAN_OBJECTS += $(TEST_DRAW_OBJECTS)
 
 ########## cleanup ##########
 DEPS = $(CLEAN_OBJECTS:.o=.d)

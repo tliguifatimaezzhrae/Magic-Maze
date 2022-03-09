@@ -3,12 +3,14 @@
 
 namespace MMaze {
 
-enum Direction {
+enum struct Direction {
   BAS,
   DROITE,
   HAUT,
   GAUCHE
 } ;
+
+extern const Direction directions[4] ;
 
 Direction tourne(Direction d, int r) ;
 

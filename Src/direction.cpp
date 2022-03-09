@@ -2,6 +2,8 @@
 
 namespace MMaze {
 
+const Direction directions[4] = {Direction::BAS, Direction::DROITE, Direction::HAUT, Direction::GAUCHE} ;
+
 Direction tourne(Direction d, int r) {
   return (Direction) ((((int) d) + r) & 3) ;
 }

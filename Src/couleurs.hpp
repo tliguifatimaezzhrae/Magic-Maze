@@ -3,13 +3,15 @@
 
 namespace MMaze {
 
-  enum Couleur {
-    AUCUNE,
-    JAUNE,
-    VERT,
-    ORANGE,
-    VIOLET
+  enum struct Couleur {
+    AUCUNE = 0,
+    JAUNE = 1,
+    VERT = 2,
+    ORANGE = 3,
+    VIOLET = 4
   } ;
+
+  extern const Couleur couleurs[4] ;
 
   extern const char* TXT_CLEAR ;
   extern const char* TXT_BOLD ;

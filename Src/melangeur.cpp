@@ -1,30 +1,17 @@
 #include "melangeur.hpp"
 
 namespace MMaze {
+  namespace MelangeurOptions {
+    std::default_random_engine semeur ;
 
-Melangeur::Melangeur(int octets) {
-  /* votre code ici */
+    void imprevisible() {
+      std::random_device rd ;
+      semeur.seed(rd()) ;
+    }
+
+    void initialiser(std::size_t graine) {
+      semeur.seed(graine) ;
+    }
+
+  }
 }
-
-Melangeur::~Melangeur() {
-  /* votre code ici */
-}
-
-void Melangeur::inserer(const void* elem) {
-  /* votre code ici */
-}
-
-void Melangeur::retirer(void* elem) {
-  /* votre code ici */
-}
-
-void Melangeur::vider() {
-  /* votre code ici */
-}
-
-int Melangeur::taille() {
-  /* votre code ici */
-  return 0 ; /* a remplacer */
-}
-
-} //end of namespace MMaze
