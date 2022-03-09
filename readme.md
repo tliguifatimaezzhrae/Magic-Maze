@@ -4,20 +4,20 @@
 
 1. [Introduction](#introduction)
     * [Objectif](#objectif)
-    * [Compétences visées](#competences-visees)
-    * [Réalisation](#realisation)
-1. [Présentation du jeu](#presentation-du-jeu)
+    * [Compétences visées](#compétences-visées)
+    * [Réalisation](#réalisation)
+1. [Présentation du jeu](#présentation-du-jeu)
     * [Principe du jeu](#principe-du-jeu)
     * [Aventurières](#aventurières)
-    * [Tuiles supermarché](#tuiles-supermarche)
-    * [Cases spéciales](#cases-speciales)
-    * [Déroulement de la partie](#deroulement-partie)
+    * [Tuiles supermarché](#tuiles-supermarché)
+    * [Cases spéciales](#cases-spéciales)
+    * [Déroulement de la partie](#déroulement-de-la-partie)
 1. [Votre travail](#votre-travail)
-    * [Génération de tuiles](#generation-tuiles)
-    * [Plus courts chemins dans une tuile](#chemin-tuile)
-    * [Gestion du supermarché](#gestion-supermarche)
-    * [Plus courts chemins dans le sumerparché](#chemin-supermarche)
-    * [Strategie de base](#strategie-base)
+    * [Génération de tuiles](#génération-de-tuiles)
+    * [Plus courts chemins dans une tuile](#plus-court-chemin-dans-une-tuile)
+    * [Gestion du supermarché](#gestion-du-supermarché)
+    * [Plus courts chemins dans le supermarché](#plus-court-chemin-dans-le-supermarché)
+    * [Strategie de base](#stratégie-de-base)
     * [Bonus](#bonus)
 
 <a name="introduction"></a>
@@ -25,7 +25,6 @@
 
 [//]: # "{{{"
 
-<a name="objectif"></a>
 ### Objectif
 
 Le but de ce projet est la réalisation d'un robot automatique pour le jeu
@@ -34,7 +33,6 @@ de société de Kasper Lapp où les joueuses doivent orienter des aventurières 
 un supermarché pour réaliser des objectifs. Votre robot devra donc être en
 mesure de calculer à partir d'une situation de jeu les meilleurs coups à jouer.
 
-<a name="competences-visees"></a>
 ### Compétences visées
 
 Ce projet vous fera mettre en pratique les algorithmes et structures de données
@@ -48,7 +46,6 @@ l'issue de ce projet, vous devriez donc être en mesure d'utiliser ces
 algorithmes et structures de données pour les problèmes pratiques que vous
 pourriez rencontrer dans la suite de votre carrière.
 
-<a name="realisation"></a>
 ### Réalisation
 
 Vous réaliserez ce projet en binômes. Ce projet sera rendu avant la dernière
@@ -71,12 +68,10 @@ lorsqu'elle est fournie.
 
 [//]: # "}}}"
 
-<a name="presentation-du-jeu"></a>
 ## Présentation du jeu
 
 [//]: # "{{{"
 
-<a name="principe-du-jeu"></a>
 ### Principe du jeu
 
 Dans le jeu Magic Maze, quatre aventurières commencent au beau milieu d'un
@@ -90,7 +85,6 @@ une seule direction (haut, bas, gauche, droite) qui lui est indiquée en début 
 partie. Les joueuses doivent donc se coordonner pour déplacer les pions, mais
 n'ont en plus que très rarement le droit de se parler pour se mettre d'accord.
 
-<a name="aventurières"></a>
 ### Aventurières
 
 Les aventurières sont matérialisées par des pions de couleur, placés sur le
@@ -98,7 +92,6 @@ plateau de jeu. Leur couleur sert à identifier les éléments du plateau qui le
 correspondent (portes, objectifs, sorties). Les couleurs sont le jaune, le
 violet, le vert et le orange.
 
-<a name="tuiles-supermarche"></a>
 ### Tuiles supermarché
 
 Le supermarché est matérialisé par des tuiles. Une tuile est un carré de 4x4
@@ -126,7 +119,6 @@ les règles de déplacement).
 Les nouvelles tuiles sont piochées au hasard, ce qui fait qu'à chaque partie
 l'agencement du supermarché est différent.
 
-<a name="cases-speciales"></a>
 ### Cases spéciales
 
 Pour simplifier les règles du jeu, nous ne considérerons dans un premier temps
@@ -137,7 +129,6 @@ que deux cases spéciales (il y en a plus dans le jeu réel):
 1. les cases sorties, il y en a également une par aventurière pour tout le
   supermarché, de la couleur de l'aventurière.
 
-<a name="deroulement-partie"></a>
 ### Déroulement de la partie
 
 En début de partie, une tuile de départ est utilisée. Cette tuile est telle que
@@ -166,7 +157,6 @@ supermarché, puis pour les emmener à leurs objectifs ou leurs sorties.
 
 [//]: # "}}}"
 
-<a name="votre-travail"></a>
 ## Votre travail
 
 [//]: # "{{{"
@@ -180,7 +170,6 @@ consistent à vous doter d'outils pour modéliser le jeu. Vous étudierez ensuit
 comment calculer les déplacements nécessaires pour amener une aventurière à une
 position donnée en utilisant le moins de coups possibles.
 
-<a name="generation-tuiles"></a>
 ### Génération de tuiles
 
 [//]: # "{{{"
@@ -489,7 +478,6 @@ fournis sous ce format.
 
 [//]: # "}}}"
 
-<a name="chemin-tuile"></a>
 ### Plus court chemin dans une tuile
 
 Une fois les tuiles fonctionnelles, vous pouvez commencer à élaborer votre
@@ -522,7 +510,6 @@ coûte un coup. Étant donné un point de départ et un point d'arrivée, vous p
 donc réaliser un simple parcours en largeur pour trouver le chemin le plus court
 entre les deux. Implémentez ce parcours en largeur.
 
-<a name="gestion-supermarche"></a>
 ### Gestion du supermarché
 
 Une fois les tuiles et les chemins fonctionnels, vous pouvez commencer à gérer
@@ -558,14 +545,12 @@ vers le bas, puis de traverser la porte gratuitement lors qu'il y a eu un
 changement de direction. Essayez donc de trouver une solution qui permette de
 façon pratique de reconnecter les tuiles au fur et à mesure du jeu.
 
-<a name="chemin-supermarche"></a>
 ### Plus court chemin dans le supermarché
 
 Lorsque votre graphe total est réalisé, vous pouvez à nouveau calculer les plus
 courts chemins via un parcours en largeur. Pour chercher le plus court chemin
 d'une case à une autre précisément, vous pouvez passer à l'algorithme A*.
 
-<a name="strategie-base"></a>
 ### Stratégie de base
 
 La stratégie de base pour le robot consiste à trouver pour chaque pion
@@ -580,7 +565,6 @@ il déplace le pion. Attention, lorsque le plus court chemin n'est pas unique, i
 pourrait y avoir blocage si deux joueurs ne considèrent pas le même chemin.
 Pensez-vous pouvoir résoudre ce problème ?
 
-<a name="bonus"></a>
 ### Bonus
 
 N'attaquez les bonus que si le reste fonctionne. Ces bonus sont des pistes pour
