@@ -32,29 +32,15 @@ $(OBJECTS) : %.o : %.cpp
 	$(CXX) -MMD $(CXXFLAGS) -c $< -o $@
 
 CLEAN_OBJECTS = $(OBJECTS)
+
 TARGETS = 
-
-########## test_draw ##########
-
-TEST_DRAW_SOURCES = test_draw.cpp
-TEST_DRAW_OBJECTS = $(TEST_DRAW_SOURCES:.cpp=.o)
-
-test_draw : $(TEST_DRAW_OBJECTS) $(OBJECTS) $(HEADERS)
-	$(CXX) $(TEST_DRAW_OBJECTS) $(OBJECTS) -o $@ $(LDFLAGS)
-	
-$(TEST_DRAW_OBJECTS): %.o : %.cpp
-	$(CXX) -MMD $(CXXFLAGS) -c $< -o $@
-
-all : test_draw
-TARGETS += test_draw
-CLEAN_OBJECTS += $(TEST_DRAW_OBJECTS)
 
 ########## test_melangeur ##########
 
 TEST_MELANGEUR_SOURCES = test_melangeur.cpp
 TEST_MELANGEUR_OBJECTS = $(TEST_MELANGEUR_SOURCES:.cpp=.o)
 
-test_melangeur : $(TEST_MELANGEUR_OBJECTS) $(OBJECTS) $(HEADERS)
+test_melangeur : $(TEST_MELANGEUR_OBJECTS) $(OBJECTS)
 	$(CXX) $(TEST_MELANGEUR_OBJECTS) $(OBJECTS) -o $@ $(LDFLAGS)
 	
 $(TEST_MELANGEUR_OBJECTS): %.o : %.cpp
@@ -63,6 +49,21 @@ $(TEST_MELANGEUR_OBJECTS): %.o : %.cpp
 all : test_melangeur
 TARGETS += test_melangeur
 CLEAN_OBJECTS += $(TEST_MELANGEUR_OBJECTS)
+
+########## test_draw ##########
+
+TEST_DRAW_SOURCES = test_draw.cpp
+TEST_DRAW_OBJECTS = $(TEST_DRAW_SOURCES:.cpp=.o)
+
+test_draw : $(TEST_DRAW_OBJECTS) $(OBJECTS)
+	$(CXX) $(TEST_DRAW_OBJECTS) $(OBJECTS) -o $@ $(LDFLAGS)
+	
+$(TEST_DRAW_OBJECTS): %.o : %.cpp
+	$(CXX) -MMD $(CXXFLAGS) -c $< -o $@
+
+all : test_draw
+TARGETS += test_draw
+CLEAN_OBJECTS += $(TEST_DRAW_OBJECTS)
 
 ########## cleanup ##########
 DEPS = $(CLEAN_OBJECTS:.o=.d)
