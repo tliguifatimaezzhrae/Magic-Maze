@@ -17,8 +17,9 @@ melangeur-build:
 melangeur-test:
   stage: test
   script:
-    #- valgrind --leak-check=full --error-exitcode=1 Src/test_melangeur
-    - Src/test_melangeur
+    - cd Src
+    #- valgrind --leak-check=full --error-exitcode=1 ./test_melangeur
+    - ./test_melangeur
   dependencies:
     - melangeur-build
 
@@ -36,8 +37,9 @@ draw-build:
 draw-test:
   stage: test
   script:
-    #- valgrind --leak-check=full --error-exitcode=1 Src/test_draw
-    - Src/test_draw
+    - cd Src
+    #- valgrind --leak-check=full --error-exitcode=1 ./test_draw
+    - ./test_draw
   dependencies:
     - draw-build
   artifacts:
