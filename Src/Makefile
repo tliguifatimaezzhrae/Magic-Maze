@@ -4,13 +4,13 @@ CXXFLAGS += -g -Wall -std=c++11 -pedantic
 CAIRO_FLAGS = $(shell pkg-config --cflags librsvg-2.0)
 CAIRO_CXXFLAGS = $(if $(CAIRO_FLAGS),$(CAIRO_FLAGS),-DNO_CAIRO)
 
-IMAGICK_FLAGS = $(shell pkg-config --with-path /usr/lib/imagemagick6/pkgconfig ImageMagick++ --cflags)
+IMAGICK_FLAGS = $(shell PKG_CONFIG_PATH=/usr/lib/imagemagick6/pkgconfig pkg-config --cflags ImageMagick++)
 IMAGICK_CXXFLAGS = $(if $(IMAGICK_FLAGS),$(IMAGICK_FLAGS),-DNO_IMAGICK)
 
 CXXFLAGS += $(CAIRO_CXXFLAGS) $(IMAGICK_CXXFLAGS)
 
 DRAW_LDFLAGS = $(shell pkg-config --libs librsvg-2.0)
-DRAW_LDFLAGS += $(shell pkg-config --with-path /usr/lib/imagemagick6/pkgconfig ImageMagick++ --libs)
+DRAW_LDFLAGS += $(shell PKG_CONFIG_PATH=/usr/lib/imagemagick6/pkgconfig pkg-config --libs ImageMagick++)
 
 LDFLAGS += $(DRAW_LDFLAGS)
 
@@ -48,6 +48,21 @@ $(TEST_DRAW_OBJECTS): %.o : %.cpp
 all : test_draw
 TARGETS += test_draw
 CLEAN_OBJECTS += $(TEST_DRAW_OBJECTS)
+
+########## test_melangeur ##########
+
+TEST_MELANGEUR_SOURCES = test_melangeur.cpp
+TEST_MELANGEUR_OBJECTS = $(TEST_MELANGEUR_SOURCES:.cpp=.o)
+
+test_melangeur : $(TEST_MELANGEUR_OBJECTS) $(OBJECTS) $(HEADERS)
+	$(CXX) $(TEST_MELANGEUR_OBJECTS) $(OBJECTS) -o $@ $(LDFLAGS)
+	
+$(TEST_MELANGEUR_OBJECTS): %.o : %.cpp
+	$(CXX) -MMD $(CXXFLAGS) -c $< -o $@
+
+all : test_melangeur
+TARGETS += test_melangeur
+CLEAN_OBJECTS += $(TEST_MELANGEUR_OBJECTS)
 
 ########## cleanup ##########
 DEPS = $(CLEAN_OBJECTS:.o=.d)
