@@ -4,13 +4,13 @@ CXXFLAGS += -g -Wall -std=c++11 -pedantic
 CAIRO_FLAGS = $(shell pkg-config --cflags librsvg-2.0)
 CAIRO_CXXFLAGS = $(if $(CAIRO_FLAGS),$(CAIRO_FLAGS),-DNO_CAIRO)
 
-IMAGICK_FLAGS = $(shell GraphicsMagick++-config --cppflags --cxxflags)
+IMAGICK_FLAGS = $(shell pkg-config --with-path /usr/lib/imagemagick6/pkgconfig ImageMagick++ --cflags)
 IMAGICK_CXXFLAGS = $(if $(IMAGICK_FLAGS),$(IMAGICK_FLAGS),-DNO_IMAGICK)
 
 CXXFLAGS += $(CAIRO_CXXFLAGS) $(IMAGICK_CXXFLAGS)
 
 DRAW_LDFLAGS = $(shell pkg-config --libs librsvg-2.0)
-DRAW_LDFLAGS += $(shell GraphicsMagick++-config --ldflags --libs)
+DRAW_LDFLAGS += $(shell pkg-config --with-path /usr/lib/imagemagick6/pkgconfig ImageMagick++ --libs)
 
 LDFLAGS += $(DRAW_LDFLAGS)
 
